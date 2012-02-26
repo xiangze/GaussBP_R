@@ -152,7 +152,7 @@ for (t in 1:maxem){
       }#
     }#c
 
-    cor.post.m <- cor.x12+cor.x12
+    cor.post.m <- cor.x12+cor.y12
     cor.post <- sum(cor.post.m)/(l*2)
 
     wk.m <-var.x1-2*im$c+ave.x1+im$c*im$c
@@ -166,4 +166,4 @@ for (t in 1:maxem){
 }
 zz <- ave.x1+0.5
 writeImage(zz,"outimage.png")
-print(c("alpha_t=",alpha.hz,"sig_t=",sig.hz))
+cat("alpha_t=",alpha.hz,"sig_t=",sig.hz)
