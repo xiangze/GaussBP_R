@@ -2,7 +2,7 @@ library(RImageBook)
 
 source("slideshift.R")
 
-maxem <- 10
+maxem <- 1000
 
 imc <- readImage("sample.jpg")
 ima <- imgRGB2Grey(imc)
@@ -31,9 +31,9 @@ sig.hz <- zm
 dse.em <- 120
 eps <- 100
 
-cat("initdone\n")
+#cat("initdone\n")
 
-cat("alpha.hz,sig.hz loop\n")
+#cat("alpha.hz,sig.hz loop\n")
 
 for (t in 1:maxem){
   if(dse.em> 0.00001){
@@ -49,7 +49,7 @@ for (t in 1:maxem){
     nr <- 500
     dse <- 10000000
 
-    cat("t=",t,"\n")
+    #cat("t=",t,"\n")
 
     for (c in 1:nr){
       if(dse>eps){
@@ -59,7 +59,7 @@ for (t in 1:maxem){
         muz <- slideset4.4(mu)
         lambdaz<- slideset4.4(lambda)
 
-        cat("inv \n")   
+        #cat("inv \n")   
         ir11 <- isig2+alpha+lambdaz$hp$c+lambdaz$vp$c+lambdaz$vn$c
         ir22 <- isig2+alpha+lambdaz$hp$xp+lambdaz$vp$xp+lambdaz$vn$xp
         ir12 <- -alpha
@@ -71,7 +71,7 @@ for (t in 1:maxem){
         r12 <- -ir21/dd
         r21 <- ir12/dd
 
-        cat("ave.x \n")
+        #cat("ave.x \n")
         ave.x1 <- (im$c*isig2+muz$hn$c*lambdaz$hn$c + muz$hp$c*lambdaz$hp$c
                    + muz$vp$c*lambdaz$vp$c+ muz$vn$c*lambdaz$vn$c)/
                      (isig2+lambdaz$hn$c + lambdaz$hp$c +lambdaz$vp$c + lambdaz$vn$c)
@@ -84,10 +84,10 @@ for (t in 1:maxem){
         var.x2 <- r22+ave.x2*ave.x2
         cov.x12 <- r12+ave.x1*ave.x2
         cor.x12 <- var.x1+var.x2-2*cov.x12
-        cat("lambda \n")
+        #cat("lambda \n")
         lambda$hp <- 1/(1/alpha+1/(isig2+lambdaz$hp$xm+lambdaz$vp$xm+lambdaz$vn$xm))
         lambda$hn <- 1/(1/alpha+1/(isig2+lambdaz$hn$xp+lambdaz$vp$xp+lambdaz$vn$xp))
-        cat("mu \n")
+        #cat("mu \n")
         
         mu$hp <- (im$xm*isig2+muz$hp$xm*lambdaz$hp$xm+muz$vn$xm*lambdaz$vn$xm
                     +muz$vp$xm*lambdaz$vp$xm)/
@@ -97,7 +97,7 @@ for (t in 1:maxem){
                     +muz$vp$xp*lambdaz$vp$xp)/
                       (isig2+lambdaz$hp$xm+lambdaz$vn$xm+lambdaz$vn$xm)
 
-        cat("inv \n")   
+        #cat("inv \n")   
         ir11 <- isig2+alpha+lambdaz$hp$c+lambdaz$hn$c+lambdaz$vp$c
         ir22 <- isig2+alpha+lambdaz$hp$yp+lambdaz$hn$yp+lambdaz$vp$yp
         ir12 <- -alpha
@@ -109,7 +109,7 @@ for (t in 1:maxem){
         rr12 <- -ir21/dd;
         rr21 <- ir12/dd;
 
-        cat("ave.y \n")
+        #cat("ave.y \n")
        
         ave.y1 <- (im$c*isig2+muz$hn$c*lambdaz$hn$c + muz$hp$c*lambdaz$hp$c
                    + muz$vp$c*lambdaz$vp$c+ muz$vn$c*lambdaz$vn$c)/
@@ -161,8 +161,7 @@ for (t in 1:maxem){
     sig.hz <- sqrt(wk/l)
     alpha.hz <- 1/(2*cor.post)
     dse.em <- mean(abs(alpha-alpha.hz)+abs(1/(sig.h*sig.h)-1/(sig.hz*sig.hz)))
-    cat("EM step:",t,"alpha_t=",alpha.hz,"sig_t=",sig.hz)
-#    print(c("EM step:",t,"alpha_t=",alpha.hz,"sig_t=",sig.hz))
+    cat("EM step:",t,"alpha_t=",alpha.hz,"sig_t=",sig.hz,"\n")
   }
 }
 zz <- ave.x1+0.5
